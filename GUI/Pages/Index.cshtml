@@ -1,0 +1,23 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@using file_organizer.Core
+
+<div class="text-center">
+    <h1 class="display-4">Welcome :f</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <ol class="file-list">
+        @if (Model.controller != null)
+        {
+            @foreach (var item in Model.controller.Entries)
+            {
+                <li draggable="true">
+                    @item.PrettyName
+                </li>
+            }
+        }
+    </ol>
+</div>

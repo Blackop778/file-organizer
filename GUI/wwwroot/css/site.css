@@ -1,6 +1,14 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.file-list {
+  border: 1px solid gray;
+}
+
+.file-list li {
+  list-style-type: none;
+}
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;

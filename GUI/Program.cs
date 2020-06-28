@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ElectronNET.API;
 
-namespace file_organizer
+namespace file_organizer.GUI
 {
     public class Program
     {

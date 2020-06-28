@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ElectronNET.API;
 
-namespace file_organizer
+namespace file_organizer.GUI
 {
     public class Startup
     {
@@ -54,7 +54,7 @@ namespace file_organizer
             });
 
             // Open the Electron-Window here
-            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
+            Electron.WindowManager.CreateWindowAsync();
         }
     }
 }
