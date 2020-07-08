@@ -1,15 +1,15 @@
 {
-  "executable": "file-organizer",
+  "executable": "GUI",
   "splashscreen": {
     "imageFile": ""
   },
-  "name": "file-organizer",
+  "name": "GUI",
   "author": "",
   "singleInstance": false,
   "environment": "Production",
   "build": {
-    "appId": "com.file-organizer.app",
-    "productName": "file-organizer",
+    "appId": "com.GUI.app",
+    "productName": "GUI",
     "copyright": "Copyright © 2020",
     "buildVersion": "1.0.0",
     "compression": "maximum",

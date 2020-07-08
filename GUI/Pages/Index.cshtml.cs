@@ -16,7 +16,7 @@ namespace file_organizer.GUI.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        public Controller controller;
+        public static Controller Controller { get; private set; }
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -40,8 +40,12 @@ namespace file_organizer.GUI.Pages
                 await Electron.Dialog.ShowMessageBoxAsync(options);
                 window.Close();
             } else {
-                controller = new Controller(directory[0]);
+                Controller = new Controller(directory[0]);
             }
+        }
+
+        public void OnPostRemove(string prettyName) {
+            Controller.DisableEntry(prettyName);
         }
     }
 }

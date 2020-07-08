@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="ElectronNET.API" Version="9.31.1" />
+    <PackageReference Include="Westwind.AspnetCore.LiveReload" Version="0.2.4.2" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="electron.manifest.json">

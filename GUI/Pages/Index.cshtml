@@ -6,17 +6,27 @@
 @using file_organizer.Core
 
 <div class="text-center">
-    <h1 class="display-4">Welcome :f</h1>
+    <h1 class="display-4">Welcome :D</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
     <ol class="file-list">
-        @if (Model.controller != null)
+        @if (IndexModel.Controller != null)
         {
-            @foreach (var item in Model.controller.Entries)
+            @foreach (var item in IndexModel.Controller.Entries)
             {
-                <li draggable="true">
-                    @item.PrettyName
-                </li>
+                @if (item.Enabled) {
+                    <li>
+                        <input type="number" size="6" value="@item.Number"></input>
+                        <div class="item-name-container">
+                            @* <p class="item-name">@item.PrettyName</p> *@
+                            @item.PrettyName
+                        </div>
+                        <form asp-page-handler="remove" method="POST">
+                            <button>X</button>
+                            <input type="hidden" name="prettyName" value="@item.PrettyName">
+                        </form>
+                    </li>
+                }
             }
         }
     </ol>

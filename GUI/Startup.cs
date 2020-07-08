@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ElectronNET.API;
+using Westwind.AspNetCore.LiveReload;
 
 namespace file_organizer.GUI
 {
@@ -25,6 +26,7 @@ namespace file_organizer.GUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddLiveReload();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,8 +43,11 @@ namespace file_organizer.GUI
                 app.UseHsts();
             }
 
+            app.UseLiveReload();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStatusCodePages();
 
             app.UseRouting();
 
