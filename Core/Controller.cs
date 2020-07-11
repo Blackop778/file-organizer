@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace file_organizer.Core {
     public class Controller {
@@ -51,8 +52,44 @@ namespace file_organizer.Core {
             _entries.Sort();
         }
 
-        public void DisableEntry(string prettyName) {
-            _entries.Find(entry => entry.PrettyName.Equals(prettyName)).Disable();
+        public void DisableEntry(string fileName) {
+            _entries.Find(entry => entry.FileName.Equals(fileName)).Disable();
+        }
+
+        public void MoveEntry(int toIndex, string fileName) {
+            OrganizerEntry targetEntry = _entries.Find(entry => entry.FileName.Equals(fileName));
+            int fromIndex = targetEntry.Number;
+            bool movingDown = toIndex <= fromIndex;
+            // there is already an entry at the index we are trying to move to, so we need to keep shifting entries
+            // up until we find a gap between numbers
+            bool cascadeUp = _entries.Where((entry) => entry.Number == toIndex && entry != targetEntry).Any();
+
+            int lowerIndex = movingDown ? toIndex : fromIndex;
+            int higherIndex = movingDown ? fromIndex : toIndex;
+
+            int? lastNumber = null; 
+            IEnumerable<OrganizerEntry> entriesToShift =_entries.Where((entry) => {
+                if (entry != targetEntry && lowerIndex <= entry.Number) {
+                    if (!cascadeUp) {
+                        return higherIndex >= entry.Number;
+                    } else {
+                        if (higherIndex >= entry.Number || lastNumber != null && lastNumber == entry.Number - 1) {
+                            lastNumber = entry.Number;
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            });
+
+            foreach (OrganizerEntry entry in entriesToShift) {
+                entry.Number += movingDown || entry.Number > higherIndex ? 1 : -1;
+            }
+
+            targetEntry.Number = toIndex;
+
+            SortEntries();
         }
     }
 }

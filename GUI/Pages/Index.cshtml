@@ -16,14 +16,18 @@
             {
                 @if (item.Enabled) {
                     <li>
-                        <input type="number" size="6" value="@item.Number"></input>
+                        <form asp-page-handler="move" method="POST">
+                            <input type="number" name="toIndex" value="@item.Number">
+                            <input type="hidden" name="fileName" value="@item.FileName">
+                            <button>X</button>
+                        </form>
                         <div class="item-name-container">
                             @* <p class="item-name">@item.PrettyName</p> *@
                             @item.PrettyName
                         </div>
                         <form asp-page-handler="remove" method="POST">
                             <button>X</button>
-                            <input type="hidden" name="prettyName" value="@item.PrettyName">
+                            <input type="hidden" name="fileName" value="@item.FileName">
                         </form>
                     </li>
                 }

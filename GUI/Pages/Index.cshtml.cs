@@ -44,8 +44,12 @@ namespace file_organizer.GUI.Pages
             }
         }
 
-        public void OnPostRemove(string prettyName) {
-            Controller.DisableEntry(prettyName);
+        public void OnPostRemove(string fileName) {
+            Controller.DisableEntry(fileName);
+        }
+
+        public void OnPostMove(int toIndex, string fileName) {
+            Controller.MoveEntry(toIndex, fileName);
         }
     }
 }
