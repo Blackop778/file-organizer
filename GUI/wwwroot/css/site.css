@@ -1,9 +1,27 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid black;
+}
+
+.header h1 {
+  flex-basis: auto;
+  flex-grow: 1;
+  margin: 0 .4em;
+  vertical-align: middle;
+}
+
 .file-list {
   border: 1px solid gray;
   padding: 5px;
+  margin-top: 11px;
 }
 
 .file-list li {
@@ -11,47 +29,38 @@ for details on configuring this project to bundle and minify static web assets. 
   display: flex;
   flex-direction: row;
   min-height: 3em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid gray;
 }
 
-.file-list input {
-  width: 6em;
+.file-list li:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+/* Prevents children from taking multiple lines (even when they don't have to) and they also don't fill vertical space*/
+.file-list .number-container{
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
 }
 
 .file-list .item-name-container {
   flex-basis: auto;
   flex-grow: 1;
   margin: 0 .4em;
-  /* display: inline-block; */
   vertical-align: middle;
 }
 
 .file-list .item-name {
-  /* margin: auto 0; */
   margin: 0;
   vertical-align: middle;
 }
 
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
-
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.file-list .cancel {
+  /* Passes WCAG AAA contrast ratio */
+  background-color: #EFC7C7;
+  color: #800000;
 }
 
 /* Sticky footer styles
@@ -86,16 +95,4 @@ button.accept-policy {
 html {
   position: relative;
   min-height: 100%;
-}
-
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
 }

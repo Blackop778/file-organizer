@@ -73,7 +73,7 @@ namespace file_organizer.Core {
                     if (!cascadeUp) {
                         return higherIndex >= entry.Number;
                     } else {
-                        if (higherIndex >= entry.Number || lastNumber != null && lastNumber == entry.Number - 1) {
+                        if (higherIndex >= entry.Number || lastNumber != null && (lastNumber == entry.Number - 1 || lastNumber == entry.Number)) {
                             lastNumber = entry.Number;
                             return true;
                         }

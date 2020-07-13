@@ -51,5 +51,19 @@ namespace file_organizer.GUI.Pages
         public void OnPostMove(int toIndex, string fileName) {
             Controller.MoveEntry(toIndex, fileName);
         }
+
+        public static int GetNumberInputWidth() {
+            int width = 3;
+
+            if (Controller != null && Controller.Entries.Any()) {
+                OrganizerEntry lastEntry = Controller.Entries.Last();
+                width = (int)Math.Floor(Math.Log10(lastEntry.Number)) + 1;
+
+                if (width < 3)
+                    width = 3;
+            }
+
+            return width;
+        }
     }
 }
