@@ -1,0 +1,9 @@
+@page
+@model DirectoryChooserModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<form asp-page-handler="OpenDialog" method="POST" class="number-container">
+    <button>choose directory</button>
+</form>

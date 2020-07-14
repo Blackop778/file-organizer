@@ -1,5 +1,5 @@
 ﻿@page
-@model IndexModel
+@model EditorModel
 @{
     ViewData["Title"] = "Home page";
 }
@@ -9,19 +9,19 @@
 
 <style>
     .file-list input {
-        width: @(IndexModel.GetNumberInputWidth() + "em");
+        width: @(EditorModel.GetNumberInputWidth() + "em");
     }
 </style>
 <div class="header">
-    <button>Cancel</button>
+    <button onclick="location.replace('http:\/\/localhost:8001/directorychooser')">Cancel</button>
     <h1>File Organizer</h1>
     <button>Save</button>
 </div>
 <div class="text-center">
     <ol class="file-list">
-        @if (IndexModel.Controller != null)
+        @if (EditorModel.Controller != null)
         {
-            @foreach (var item in IndexModel.Controller.Entries)
+            @foreach (var item in EditorModel.Controller.Entries)
             {
                 @if (item.Enabled) {
                     <li>
@@ -34,10 +34,10 @@
                             @* <p class="item-name">@item.PrettyName</p> *@
                             @item.PrettyName
                         </div>
-                        <form asp-page-handler="remove" method="POST">
-                            <button class="cancel">X</button>
+                        <div>
+                            <button class="cancel" onclick="ajaxPost(this, 'remove')">X</button>
                             <input type="hidden" name="fileName" value="@item.FileName">
-                        </form>
+                        </div>
                     </li>
                 }
             }

@@ -27,6 +27,7 @@ namespace file_organizer.GUI
         {
             services.AddRazorPages();
             services.AddLiveReload();
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +60,7 @@ namespace file_organizer.GUI
             });
 
             // Open the Electron-Window here
-            Electron.WindowManager.CreateWindowAsync();
+            Electron.WindowManager.CreateWindowAsync("http://localhost:8001/directorychooser");
         }
     }
 }
