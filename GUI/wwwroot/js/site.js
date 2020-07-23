@@ -12,7 +12,7 @@ function ajaxPost(element, handler) {
         const element = siblings[i];
 
         if (element.tagName === "INPUT" && element.attributes["name"]) {
-            data[element.attributes["name"].value] = encodeURI(element.attributes["value"].value);
+            data[element.attributes["name"].value] = encodeURIComponent(element.value);
         }
     }
 
@@ -20,7 +20,6 @@ function ajaxPost(element, handler) {
         type: "POST",
         url: `/editor?${$.param(data)}`,
         contentType: "application/json",
-        dataType: "json",
         beforeSend: function (xhr) {
             xhr.setRequestHeader("XSRF-TOKEN",
                 $('input:hidden[name="__RequestVerificationToken"]').val());

@@ -25,11 +25,11 @@
             {
                 @if (item.Enabled) {
                     <li>
-                        <form asp-page-handler="move" method="POST" class="number-container">
+                        <div class="number-container">
                             <input type="number" name="toIndex" value="@item.Number">
                             <input type="hidden" name="fileName" value="@item.FileName">
-                            <button>X</button>
-                        </form>
+                            <button onclick="ajaxPost(this, 'move')">X</button>
+                        </div>
                         <div class="item-name-container">
                             @* <p class="item-name">@item.PrettyName</p> *@
                             @item.PrettyName
@@ -44,3 +44,5 @@
         }
     </ol>
 </div>
+@* named handlers will not work without this *@
+<form asp-page-handler="dummy"></form>

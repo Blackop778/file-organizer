@@ -29,8 +29,9 @@ namespace file_organizer.GUI.Pages
             return new OkResult();
         }
 
-        public void OnPostMove(int toIndex, string fileName) {
-            Controller.MoveEntry(toIndex, fileName);
+        public OkResult OnPostMove(int toIndex, string fileName) {
+            Controller.MoveEntry(toIndex, HttpUtility.UrlDecode(fileName));
+            return new OkResult();
         }
 
         public static int GetNumberInputWidth() {
