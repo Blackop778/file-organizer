@@ -5,11 +5,13 @@ using System.Linq;
 
 namespace file_organizer.Core {
     public class Controller {
-        private List<OrganizerEntry> _entries;
+        internal List<OrganizerEntry> _entries;
         public IReadOnlyCollection<OrganizerEntry> Entries => _entries.AsReadOnly();
+        private TransactionHistory transactionHistory;
 
         public Controller(string directoryPath) {
             _entries = new List<OrganizerEntry>();
+            transactionHistory = new TransactionHistory();
 
             List<string> files = new List<string>(Directory.EnumerateFiles(directoryPath));
             files.Sort();
@@ -73,7 +75,7 @@ namespace file_organizer.Core {
                     if (!cascadeUp) {
                         return higherIndex >= entry.Number;
                     } else {
-                        if (higherIndex >= entry.Number || lastNumber != null && (lastNumber == entry.Number - 1 || lastNumber == entry.Number)) {
+                        if (higherIndex >= entry.Number || (lastNumber != null && (lastNumber == entry.Number - 1 || lastNumber == entry.Number))) {
                             lastNumber = entry.Number;
                             return true;
                         }
