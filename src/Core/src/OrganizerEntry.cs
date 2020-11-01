@@ -9,7 +9,6 @@ namespace file_organizer.Core {
         public string FileName { get; private set; }
         public IReadOnlyCollection<string> Extensions => _extensions.AsReadOnly();
         public int Number { get; set; }
-        public bool Enabled { get; private set; }
 
         public OrganizerEntry(string fileName, string prettyName, string extension, int number) {
             _extensions = new List<string>();
@@ -18,7 +17,6 @@ namespace file_organizer.Core {
             PrettyName = prettyName;
             _extensions.Add(extension);
             Number = number;
-            Enabled = true;
         }
 
         public void AddExtension(string extension) {
@@ -34,10 +32,6 @@ namespace file_organizer.Core {
             }
 
             return 1;
-        }
-
-        public void Disable() {
-            Enabled = false;
         }
     }
 }

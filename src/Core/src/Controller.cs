@@ -49,49 +49,63 @@ namespace file_organizer.Core {
             SortEntries();
         }
 
-        private void SortEntries()
+        internal void SortEntries()
         {
             _entries.Sort();
         }
 
         public void DisableEntry(string fileName) {
-            _entries.Find(entry => entry.FileName.Equals(fileName)).Disable();
+            OrganizerEntry targetEntry = _entries.Find(entry => entry.FileName.Equals(fileName));
+            if (targetEntry != null) {
+                RemoveTransaction transaction = new RemoveTransaction(this);
+
+                transaction.AddRemoveEntry(targetEntry);
+
+                transactionHistory.AddAndApplyEntry(transaction);
+            } else {
+                Console.WriteLine($"Tried to remove '{fileName}', but the file could not be found.");
+            }
         }
 
         public void MoveEntry(int toIndex, string fileName) {
             OrganizerEntry targetEntry = _entries.Find(entry => entry.FileName.Equals(fileName));
-            int fromIndex = targetEntry.Number;
-            bool movingDown = toIndex <= fromIndex;
-            // there is already an entry at the index we are trying to move to, so we need to keep shifting entries
-            // up until we find a gap between numbers
-            bool cascadeUp = _entries.Where((entry) => entry.Number == toIndex && entry != targetEntry).Any();
+            if (targetEntry != null) {
+                MoveTransaction transaction = new MoveTransaction(this);
+                int fromIndex = targetEntry.Number;
+                bool movingDown = toIndex <= fromIndex;
+                // there is already an entry at the index we are trying to move to, so we need to keep shifting entries
+                // up until we find a gap between numbers
+                bool cascadeUp = _entries.Where((entry) => entry.Number == toIndex && entry != targetEntry).Any();
 
-            int lowerIndex = movingDown ? toIndex : fromIndex;
-            int higherIndex = movingDown ? fromIndex : toIndex;
+                int lowerIndex = movingDown ? toIndex : fromIndex;
+                int higherIndex = movingDown ? fromIndex : toIndex;
 
-            int? lastNumber = null; 
-            IEnumerable<OrganizerEntry> entriesToShift =_entries.Where((entry) => {
-                if (entry != targetEntry && lowerIndex <= entry.Number) {
-                    if (!cascadeUp) {
-                        return higherIndex >= entry.Number;
-                    } else {
-                        if (higherIndex >= entry.Number || (lastNumber != null && (lastNumber == entry.Number - 1 || lastNumber == entry.Number))) {
-                            lastNumber = entry.Number;
-                            return true;
+                int? lastNumber = null; 
+                IEnumerable<OrganizerEntry> entriesToShift =_entries.Where((entry) => {
+                    if (entry != targetEntry && lowerIndex <= entry.Number) {
+                        if (!cascadeUp) {
+                            return higherIndex >= entry.Number;
+                        } else {
+                            if (higherIndex >= entry.Number || (lastNumber != null && (lastNumber == entry.Number - 1 || lastNumber == entry.Number))) {
+                                lastNumber = entry.Number;
+                                return true;
+                            }
                         }
                     }
+
+                    return false;
+                });
+
+                foreach (OrganizerEntry entry in entriesToShift) {
+                    transaction.AddMoveEntry(entry, entry.Number, entry.Number + (movingDown || entry.Number > higherIndex ? 1 : -1));
                 }
 
-                return false;
-            });
+                transaction.AddMoveEntry(targetEntry, targetEntry.Number, toIndex);
 
-            foreach (OrganizerEntry entry in entriesToShift) {
-                entry.Number += movingDown || entry.Number > higherIndex ? 1 : -1;
+                transactionHistory.AddAndApplyEntry(transaction);
+            } else {
+                Console.WriteLine($"Tried to move '{fileName}' to {toIndex}, but the file could not be found.");
             }
-
-            targetEntry.Number = toIndex;
-
-            SortEntries();
         }
     }
 }

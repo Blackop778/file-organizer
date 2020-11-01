@@ -5,8 +5,6 @@
 }
 @using file_organizer.Core
 
-@* TODO: investigate using document.location.reload() to reload and preserve scroll location *@
-
 <style>
     .file-list input {
         width: @(EditorModel.GetNumberInputWidth() + "em");
@@ -23,23 +21,21 @@
         {
             @foreach (var item in EditorModel.Controller.Entries)
             {
-                @if (item.Enabled) {
-                    <li>
-                        <div class="number-container">
-                            <input type="number" name="toIndex" value="@item.Number">
-                            <input type="hidden" name="fileName" value="@item.FileName">
-                            <button onclick="ajaxPost(this, 'move')">X</button>
-                        </div>
-                        <div class="item-name-container">
-                            @* <p class="item-name">@item.PrettyName</p> *@
-                            @item.PrettyName
-                        </div>
-                        <div>
-                            <button class="cancel" onclick="ajaxPost(this, 'remove')">X</button>
-                            <input type="hidden" name="fileName" value="@item.FileName">
-                        </div>
-                    </li>
-                }
+                <li>
+                    <div class="number-container">
+                        <input type="number" name="toIndex" value="@item.Number">
+                        <input type="hidden" name="fileName" value="@item.FileName">
+                        <button onclick="ajaxPost(this, 'move')">✓</button>
+                    </div>
+                    <div class="item-name-container">
+                        @* <p class="item-name">@item.PrettyName</p> *@
+                        @item.PrettyName
+                    </div>
+                    <div>
+                        <button class="cancel" onclick="ajaxPost(this, 'remove')">X</button>
+                        <input type="hidden" name="fileName" value="@item.FileName">
+                    </div>
+                </li>
             }
         }
     </ol>

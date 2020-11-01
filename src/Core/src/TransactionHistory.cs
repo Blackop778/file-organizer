@@ -7,7 +7,7 @@ namespace file_organizer.Core {
 
         public TransactionHistory() {
             transactions = new List<ITransaction>();
-            currentTransactionIndex = 0;
+            currentTransactionIndex = -1;
         }
 
         public bool Forward() {
@@ -20,7 +20,7 @@ namespace file_organizer.Core {
         }
 
         public bool Backward() {
-            if (currentTransactionIndex <= 0)
+            if (currentTransactionIndex < 0)
                 return false;
 
             currentTransactionIndex -= 1;
@@ -29,7 +29,7 @@ namespace file_organizer.Core {
         }
 
         public void AddEntry(ITransaction entry) {
-            if (currentTransactionIndex != transactions.Count) {
+            if (currentTransactionIndex != transactions.Count - 1) {
                 transactions.RemoveRange(currentTransactionIndex + 1, transactions.Count - (currentTransactionIndex + 1));
             }
             transactions.Add(entry);

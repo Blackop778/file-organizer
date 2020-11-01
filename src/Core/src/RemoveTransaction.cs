@@ -3,31 +3,31 @@ using System.Collections.Generic;
 namespace file_organizer.Core {
     public class RemoveTransaction : MoveTransaction {
         private List<OrganizerEntry> removedEntries;
-        private Controller controller;
 
-        public MoveTransaction(Controller controller) {
-            entries = new List<MoveTransactionEntry>();
-            this.controller = controller;
+        public RemoveTransaction(Controller controller) : base(controller) {
+            removedEntries = new List<OrganizerEntry>();
         }
 
         public void AddRemoveEntry(OrganizerEntry item) {
-            entries.Add(new MoveTransactionEntry(item, fromIndex, toIndex));
+            removedEntries.Add(item);
         }
 
-        public void Apply() {
-            base.Apply();
-
-            foreach(MoveTransactionEntry entry in entries) {
-                entry.Item.Number = entry.ToIndex;
+        public override void Apply() {
+            foreach (OrganizerEntry entry in removedEntries)
+            {
+                controller._entries.Remove(entry);
             }
+
+            base.Apply();
         }
 
-        public void Undo() {
-            base.Apply();
-            
-            foreach(MoveTransactionEntry entry in entries) {
-                entry.Item.Number = entry.FromIndex;
+        public override void Undo() {
+            foreach (OrganizerEntry entry in removedEntries)
+            {
+                controller._entries.Add(entry);
             }
+
+            base.Apply();
         }
     }
 }

@@ -20,7 +20,7 @@ for details on configuring this project to bundle and minify static web assets. 
 
 .file-list {
   border: 1px solid gray;
-  padding: 5px;
+  padding: 0 5px;
   margin-top: 11px;
 }
 
@@ -30,6 +30,7 @@ for details on configuring this project to bundle and minify static web assets. 
   flex-direction: row;
   min-height: 3em;
   margin-bottom: 1em;
+  margin-top: 1em;
   border-bottom: 1px solid gray;
 }
 
