@@ -107,5 +107,36 @@ namespace file_organizer.Core {
                 Console.WriteLine($"Tried to move '{fileName}' to {toIndex}, but the file could not be found.");
             }
         }
+
+        public bool CanUndo()
+        {
+            return transactionHistory.CanBackward();
+        }
+
+        public bool CanRedo()
+        {
+            return transactionHistory.CanForward();
+        }
+
+        public bool Undo()
+        {
+            if (!transactionHistory.Backward())
+            {
+                Console.WriteLine("Controller was told to undo, but it was unable to.");
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool Redo() {
+            if (!transactionHistory.Forward())
+            {
+                Console.WriteLine("Controller was told to redo, but it was unable to.");
+                return false;
+            }
+
+            return true;
+        }
     }
 }

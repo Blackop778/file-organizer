@@ -24,23 +24,27 @@ namespace file_organizer.GUI.Pages
 
         public async Task OnPostOpenDialog()
         {
-            BrowserWindow window = Electron.WindowManager.BrowserWindows.First();
-            OpenDialogProperty[] properties = new OpenDialogProperty[] { OpenDialogProperty.openDirectory };
-            string[] directory = await Electron.Dialog.ShowOpenDialogAsync(window, new OpenDialogOptions() { Properties = properties });
+            try {
+                BrowserWindow window = Electron.WindowManager.BrowserWindows.First();
+                OpenDialogProperty[] properties = new OpenDialogProperty[] { OpenDialogProperty.openDirectory };
+                string[] directory = await Electron.Dialog.ShowOpenDialogAsync(window, new OpenDialogOptions() { Properties = properties });
 
-            if (directory.Length <= 0)
-            {
-                MessageBoxOptions options = new MessageBoxOptions("Error: Please choose a folder to open")
+                if (directory.Length <= 0)
                 {
-                    Buttons = new string[] { "OK" },
-                    Type = MessageBoxType.error,
-                    Title = "No folder chosen"
-                };
-                await Electron.Dialog.ShowMessageBoxAsync(options);
-                window.Close();
-            } else {
-                EditorModel.Controller = new Controller(directory[0]);
-                window.LoadURL("http://localhost:8001/editor");
+                    MessageBoxOptions options = new MessageBoxOptions("Error: Please choose a folder to open")
+                    {
+                        Buttons = new string[] { "OK" },
+                        Type = MessageBoxType.error,
+                        Title = "No folder chosen"
+                    };
+                    await Electron.Dialog.ShowMessageBoxAsync(options);
+                    window.Close();
+                } else {
+                    EditorModel.Controller = new Controller(directory[0]);
+                    window.LoadURL("http://localhost:8001/editor");
+                }
+            } catch (InvalidOperationException e) {
+                Console.WriteLine($"Failed to open the directory open dialog: {e}");
             }
         }
     }

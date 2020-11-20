@@ -34,3 +34,12 @@ function ajaxPost(element, handler) {
         }
     });
 }
+
+function dropdownButtonClick(element) {
+    const children = element.parentElement.children;
+    for (let i = 0; i < children.length; i++) {
+        if (children[i].classList.contains("dropdown-content")) {
+            children[i].classList.toggle("clicked");
+        }
+    }
+}

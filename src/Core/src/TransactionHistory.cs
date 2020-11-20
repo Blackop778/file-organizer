@@ -11,7 +11,7 @@ namespace file_organizer.Core {
         }
 
         public bool Forward() {
-            if (currentTransactionIndex >= transactions.Count)
+            if (!CanForward())
                 return false;
 
             currentTransactionIndex += 1;
@@ -20,11 +20,11 @@ namespace file_organizer.Core {
         }
 
         public bool Backward() {
-            if (currentTransactionIndex < 0)
+            if (!CanBackward())
                 return false;
 
+            transactions[currentTransactionIndex].Undo();
             currentTransactionIndex -= 1;
-            transactions[currentTransactionIndex].Apply();
             return true;
         }
 
@@ -38,6 +38,14 @@ namespace file_organizer.Core {
         public void AddAndApplyEntry(ITransaction entry) {
             AddEntry(entry);
             Forward();
+        }
+
+        public bool CanForward() {
+            return currentTransactionIndex < (transactions.Count - 1) && transactions.Count != 0;
+        }
+
+        public bool CanBackward() {
+            return currentTransactionIndex >= 0;
         }
     }
 }

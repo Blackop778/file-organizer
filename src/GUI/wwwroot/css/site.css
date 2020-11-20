@@ -64,6 +64,28 @@ for details on configuring this project to bundle and minify static web assets. 
   color: #800000;
 }
 
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown-content {
+  background: #fff;
+  box-shadow: 2px 2px 3px 0px #999999;
+  display: none;
+  left: 0;
+  position: absolute;
+}
+
+.dropdown-content button {
+  width: 100%;
+  margin: 1px;
+}
+
+.dropdown:hover > .dropdown-content, .dropdown-content.clicked {
+  display: block;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

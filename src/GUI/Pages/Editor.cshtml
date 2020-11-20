@@ -11,9 +11,16 @@
     }
 </style>
 <div class="header">
-    <button onclick="location.replace('http:\/\/localhost:8001/directorychooser')">Cancel</button>
+    <div class="dropdown">
+        <button onclick="dropdownButtonClick(this)">Settings ▼</button>
+        <div class="dropdown-content">
+            <button>Save</button>
+            <button onclick="location.replace('http:\/\/localhost:8001/directorychooser')">Back</button>
+        </div>
+    </div>
     <h1>File Organizer</h1>
-    <button>Save</button>
+    <button onclick="ajaxPost(this, 'undo')" disabled="@(!EditorModel.Controller.CanUndo())" title="Undo">↺</button>
+    <button onclick="ajaxPost(this, 'redo')" disabled="@(!EditorModel.Controller.CanRedo())" title="Redo">↻</button>
 </div>
 <div class="text-center">
     <ol class="file-list">

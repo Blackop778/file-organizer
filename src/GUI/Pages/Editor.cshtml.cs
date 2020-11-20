@@ -34,6 +34,16 @@ namespace file_organizer.GUI.Pages
             return new OkResult();
         }
 
+        public OkResult OnPostUndo() {
+            Controller.Undo();
+            return new OkResult();
+        }
+
+        public OkResult OnPostRedo() {
+            Controller.Redo();
+            return new OkResult();
+        }
+
         public static int GetNumberInputWidth() {
             int width = 3;
 
